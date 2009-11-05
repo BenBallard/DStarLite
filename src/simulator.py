@@ -16,7 +16,7 @@ import astar
 config = ConfigParser.SafeConfigParser()
 config.read("robot.ini")
 
-robot = Robot(3,3,3)
+robot = Robot(3,3,30)
 #robot.printData()
 imageMap = ImageReader()
 imageMap.loadFile("/home/ben/TestImage1.bmp")

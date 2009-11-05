@@ -18,8 +18,8 @@ class node(object):
         self.goal = goal
         self.robot = bot
         if parent :
-            self.nodes = parent.nodes + 1
-            self.cost = self.parent.nodes + self.straightLineCostToGoal()
+            self.nodes = parent.nodes + -2
+            self.cost = self.straightLineCostFromStart() + self.straightLineCostToGoal()
         else:
             self.cost = 0
         self.nodes=0

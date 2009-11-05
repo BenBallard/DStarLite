@@ -23,36 +23,21 @@ def expand(x,y,Cnode):
     global nodeGrid
     global grid
     if x> 0 and y > 0 and x < len(grid) and y < len(grid[0]):
-        if grid[x][y] == 0 :
-            Nnode = node(x, y , goal, Cnode,Cnode.robot)
-            print type(nodeGrid[x][y])
-            print type(Nnode)
-            if type(nodeGrid[x][y]) == type(Nnode) :
-                Nnode = node(x, y , goal, Cnode,Cnode.robot)
-                print nodeGrid[x][y].cost
-                print Nnode.cost
-                if nodeGrid[x][y].cost>Nnode.cost:
-                    print "AFADFDAAFDS"
-                    nodeGrid[x][y].cost = Nnode.cost
-                    nodeGrid[x][y].parent = Nnode.parent
-                    heapq.sort(nodeHeap)
-            else:
-                Nnode = node(x, y , goal, Cnode,Cnode.robot)
-                nodeGrid[x][y] = Nnode
-                heapq.heappush(nodeHeap,Nnode)
+        if grid[x][y] == 0 and nodeGrid[x][y] != 1:
+            nodeGrid[x][y] = 1
 #            if x  == 20  and y == 20:
 #                print "a"
 #                print goal.x
 #                print goal.y
 #                print x
 #                print y
-#            for j in nodeGrid:
-#                for l in j:
-#                    if type(l) == type(Nnode) :
-#                        print "@" ,   
-#                    else:
-#                        print " ", 
-#                print " "
+            for j in nodeGrid:
+                for l in j:
+                    if l == 1 :
+                        print l ,   
+                    else:
+                        print " ", 
+                print " "
 #            for j in grid:
 #                for l in j:
 #                    if l == 1 :
@@ -61,23 +46,18 @@ def expand(x,y,Cnode):
 #                        print " ", 
 #                print " "
             
+            Nnode = node(x, y , goal, Cnode,Cnode.robot)
+            heapq.heappush(nodeHeap,Nnode)
+    
 
 #only expand and a dot and add it to the grid
 def expandSequence(Cnode):
     x = Cnode.x
     y = Cnode.y
-#    expand(x-1,y,Cnode)
-#    expand(x,y-1,Cnode)
-#    expand(x+1,y,Cnode)
-#    expand(x,y+1,Cnode)
-    expand(x-1,y-1,Cnode)
     expand(x-1,y,Cnode)
-    expand(x-1,y+1,Cnode)
-    expand(x,y+1,Cnode)
     expand(x,y-1,Cnode)
-    expand(x+1,y-1,Cnode)
     expand(x+1,y,Cnode)
-    expand(x+1,y+1,Cnode)
+    expand(x,y+1,Cnode)
 
 def astar(map,bot,Realgoal,path):
     global grid
