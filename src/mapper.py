@@ -39,34 +39,23 @@ def mapY():
         
 def updateMap(robot):
     global grid
+    global RealGrid
     xCenter = robot.x
     yCenter = robot.y
-    xOffsetStart=0
-    yOffsetStart=0
-    xStart=0
-    xEnd=Xgrid
-    yStart=0
-    yEnd=Ygrid
-    if xCenter - robot.vision > 0:
-        xStart = xCenter - robot.vision
-    else:
-        xOffsetStart = robot.vision - xCenter
-        
-    if xCenter + robot.vision < Xgrid:
-        xEnd = xCenter + robot.vision
-    if yCenter - robot.vision > 0:
-        yStart = yCenter - robot.vision
-    else:
-        yOffsetStart = robot.vision - yCenter
-        
-    if yCenter + robot.vision < Ygrid:
-        yEnd = yCenter + robot.vision    
-
-    for x in xrange(xStart,xEnd,1):
-        for y in xrange(yStart,yEnd,1):
-            if CircleM.grid[(x-xStart)+xOffsetStart][(y-yStart)+yOffsetStart] == 1:
-                if RealGrid[y][x] == 1:
-                    grid[y][x]=1
+    xOffset= robot.x + robot.vision
+    yOffset= robot.y + robot.vision
+    if xOffset < 0:
+        xOffset = -1 * xOffset
+    if yOffset < 0:
+        yOffset = -1 * yOffset
+    
+    for x in xrange(len(CircleM.grid)):
+        for y in xrange(len(CircleM.grid[0])):
+            if CircleM.grid[x][y] == 1:
+                if xOffset-x< len(RealGrid) and xOffset-x > 0:
+                    if yOffset-y < len(RealGrid[0]) and yOffset-y > 0:
+                        if RealGrid[xOffset-x][yOffset-y] == 1:
+                            grid[xOffset-x][yOffset-y] = 1
                     
                         
                 

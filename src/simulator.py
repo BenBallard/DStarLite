@@ -12,26 +12,39 @@ import ConfigParser
 import path
 import astar
 
+3
 
 config = ConfigParser.SafeConfigParser()
 config.read("robot.ini")
 
-robot = Robot(3,3,30)
+robot = Robot(20,3,10)
 #robot.printData()
 imageMap = ImageReader()
 imageMap.loadFile("/home/ben/TestImage1.bmp")
 imageMap.printData()
 
+
+
 mapper.initalize(imageMap,robot)
 mapper.updateMap(robot)
+
+fill = 0
+moveGrid = list()
+for x in imageMap.convertToGrid():
+    moveGrid.append(list())
+    for y in x:
+        moveGrid[fill].append(y)
+    fill = fill + 1
 
 
 Xgoal = 20
 Ygoal = 20
 goal = point(Xgoal,Ygoal)
 
-while (robot.y != Ygoal and robot.x != Xgoal) :
-    print "HI"
+moveId=0
+while (robot.y != Ygoal or robot.x != Xgoal) :
+    moveId = moveId+1
+    print moveId
     
     if path.pathIsBroken(mapper.grid) :
         path.restart()
@@ -42,11 +55,29 @@ while (robot.y != Ygoal and robot.x != Xgoal) :
     pathNode = path.path.pop()
     robot.x = pathNode.x
     robot.y = pathNode.y
+    
+    moveGrid[pathNode.x][pathNode.y]="@"
+    
     mapper.updateMap(robot)
     
+    for m in mapper.grid:
+        for p in m:
+            if p ==0:
+                print " ",
+            else:
+                print p,
+        print " "
+    
+    
     
 
-
+for x in moveGrid:
+    for y in x:
+        if y == 0:
+            print " ",
+        else:
+            print y,
+    print " "
 
 
 #for x in mapper.grid:

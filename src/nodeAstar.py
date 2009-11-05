@@ -18,11 +18,12 @@ class node(object):
         self.goal = goal
         self.robot = bot
         if parent :
-            self.nodes = parent.nodes + -2
-            self.cost = self.straightLineCostFromStart() + self.straightLineCostToGoal()
+            self.nodes = parent.nodes + 1
+            #this means the most optimal is the most straight
+            self.cost = self.nodes + self.straightLineCostToGoal()
         else:
             self.cost = 0
-        self.nodes=0
+            self.nodes=0
         
         
     def straightLineCostToGoal(self):
@@ -41,9 +42,6 @@ class node(object):
             return -1
         
         
-        print "CMP"
-        cmp(self.cost,other.cost)
-        print "POST"
         
         
     
