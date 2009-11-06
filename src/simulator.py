@@ -12,29 +12,28 @@ import ConfigParser
 import path
 import astar
 
-3
+
 
 config = ConfigParser.SafeConfigParser()
 config.read("robot.ini")
 
-robot = Robot(20,3,10)
+robot = Robot(5,10,2)
 #robot.printData()
 imageMap = ImageReader()
-imageMap.loadFile("/home/ben/TestImage1.bmp")
-imageMap.printData()
-
+imageMap.loadFile("/home/ben/TestImage2.bmp")
 
 
 mapper.initalize(imageMap,robot)
-mapper.updateMap(robot)
 
+mapper.updateMap(robot)
 fill = 0
-moveGrid = list()
-for x in imageMap.convertToGrid():
-    moveGrid.append(list())
-    for y in x:
-        moveGrid[fill].append(y)
-    fill = fill + 1
+moveGrid = imageMap.convertToGrid()
+
+#for x in imageMap.convertToGrid():
+#    moveGrid.append(list())
+#    for y in x:
+#        moveGrid[fill].append(y)
+#    fill = fill + 1
 
 
 Xgoal = 20
@@ -60,24 +59,24 @@ while (robot.y != Ygoal or robot.x != Xgoal) :
     
     mapper.updateMap(robot)
     
-    for m in mapper.grid:
-        for p in m:
-            if p ==0:
-                print " ",
-            else:
-                print p,
-        print " "
+#    for m in mapper.grid:
+#        for p in m:
+#            if p ==0:
+#                print " ",
+#            else:
+#                print p,
+#        print " "
     
     
     
-
-for x in moveGrid:
-    for y in x:
-        if y == 0:
-            print " ",
-        else:
-            print y,
-    print " "
+#
+#for x in moveGrid:
+#    for y in x:
+#        if y == 0:
+#            print " ",
+#        else:
+#            print y,
+#    print " "
 
 
 #for x in mapper.grid:

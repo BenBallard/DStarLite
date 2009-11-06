@@ -3,6 +3,9 @@
 #from ImageFile import ImageFile
 #import BmpImagePlugin
 import Image
+import numpy
+
+
 #import sys
 
 #A Map
@@ -17,7 +20,7 @@ class ImageReader (object):
         self.y = y 
         
     def loadFile(self,fileName):
-        self.image = Image.open(fileName)
+        self.image = Image.open(fileName).convert("1")
         x,y = self.image.size
         self.x = x
         self.y = y
@@ -35,7 +38,7 @@ class ImageReader (object):
         data = list(self.image.getdata());
         for x in xrange(self.y):
             for y in xrange(self.x):
-                if data[x*self.x + y][0] == 255:
+                if data[x*self.x + y][0] == 1:
                     print " ",
                 else:
                     print "#",
@@ -43,15 +46,29 @@ class ImageReader (object):
             
     def convertToGrid(self):
         grid =list()
-        data = list(self.image.getdata());
+        print "ADDDD"
+        a = numpy.asarray(self.image) # a is readonly
+        
+        print a
+        
+        
+        
+        
+        data = list(self.image.convert("1").getdata())
+        
+        
         for x in xrange(self.y):
             grid.append(list())
             for y in xrange(self.x):
-                if data[x*self.x + y][0] == 255:
-                    grid[x].append(0)
-                else:
-                    grid[x].append(1)
+                if a[x][y] == False:
+                    print a[x][y]
+#                
+#                if data[x*self.x + y] == 255:
+#                    grid[x].append(0)
+#                else:
+#                    grid[x].append(1)
         return grid
+        print "ADF"
                     
             
             
