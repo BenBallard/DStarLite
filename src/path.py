@@ -43,10 +43,12 @@ def pathIsBroken(grid):
     if len(path) == 0 :
         return True
     for p in path:
-        for x in xrange(len(grid)):
-            for y in xrange(len(grid[0])):
-                if p.x == x and p.y == y:
-                    if grid[x][y] == 1:
-                        return True
+        if grid[p.x][p.y] == 1:
+            return True
+#        for x in xrange(len(grid)):
+#            for y in xrange(len(grid[0])):
+#                if p.x == x and p.y == y:
+#                    if grid[x][y] == 1:
+#                        return True
     return False
         

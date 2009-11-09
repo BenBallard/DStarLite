@@ -7,6 +7,7 @@ Created on Nov 2, 2009
 
 import math
 from robotSim import Robot 
+from numpy import *
 
 class CircleMap(object):
     def __init__(self,radi):
@@ -15,15 +16,14 @@ class CircleMap(object):
         self.y = size
         self.xOffset = radi
         self.yOffset = radi
-        self.grid = list()
+        self.grid = zeros((radi * 2 + 1, radi * 2 + 1))
         for x in xrange(size):
-            self.grid.append(list())
             for y in xrange(size):
                 radius = round(math.sqrt((pow(x-radi,2) + pow(y-radi,2))))
                 if radius <= radi :
-                    self.grid[x].append(1)
+                    self.grid[x,y] = 1
                 else:
-                    self.grid[x].append(0)
+                    self.grid[x,y] = 0
                     
     def printMap(self):
         for x in self.grid:

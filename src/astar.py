@@ -9,7 +9,6 @@ from nodeAstar import node
 import nodeAstar
 import sys
 
-grid = list()
 robot = 0
 nodeGrid  = list()
 
@@ -72,12 +71,7 @@ def astar(map,bot,Realgoal,path):
     nodeHeap = list()
     robot = bot
     fill = 0
-    nodeGrid = list()
-    for x in grid:
-        nodeGrid.append(list())
-        for y in x:
-            nodeGrid[fill].append(0)
-        fill = fill + 1
+    nodeGrid = grid.copy()  * 0
     
     #setup 
     Cnode = node(robot.x,robot.y,goal,0,robot)
@@ -98,7 +92,6 @@ def astar(map,bot,Realgoal,path):
 #        print goal.y
 #        print Cnode.x
 #        print Cnode.y
-    print "solution found"
     while Cnode.parent:
         path.add(Cnode.x,Cnode.y,NodesOpened)
         NodesOpened = NodesOpened - 1

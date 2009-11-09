@@ -17,45 +17,36 @@ import astar
 config = ConfigParser.SafeConfigParser()
 config.read("robot.ini")
 
-robot = Robot(5,10,2)
-#robot.printData()
+robot = Robot(3,3,400)
 imageMap = ImageReader()
-imageMap.loadFile("/home/ben/TestImage2.bmp")
-
+imageMap.loadFile("/home/ben/TestImage3.bmp")
 
 mapper.initalize(imageMap,robot)
 
 mapper.updateMap(robot)
 fill = 0
-moveGrid = imageMap.convertToGrid()
-
-#for x in imageMap.convertToGrid():
-#    moveGrid.append(list())
-#    for y in x:
-#        moveGrid[fill].append(y)
-#    fill = fill + 1
+moveGrid = imageMap.convertToGrid().copy()
 
 
-Xgoal = 20
-Ygoal = 20
+
+Xgoal = 500
+Ygoal = 500
 goal = point(Xgoal,Ygoal)
 
+print "STARTIN LOOP"
 moveId=0
 while (robot.y != Ygoal or robot.x != Xgoal) :
     moveId = moveId+1
     print moveId
-    
     if path.pathIsBroken(mapper.grid) :
         path.restart()
-        print "PLAN"
         astar.astar(mapper,robot,goal,path)
-        print"Finished"
     
     pathNode = path.path.pop()
     robot.x = pathNode.x
     robot.y = pathNode.y
     
-    moveGrid[pathNode.x][pathNode.y]="@"
+    moveGrid[pathNode.x][pathNode.y]="9"
     
     mapper.updateMap(robot)
     
@@ -64,19 +55,26 @@ while (robot.y != Ygoal or robot.x != Xgoal) :
 #            if p ==0:
 #                print " ",
 #            else:
-#                print p,
+#                print "#",
 #        print " "
     
     
     
 #
-#for x in moveGrid:
-#    for y in x:
-#        if y == 0:
-#            print " ",
-#        else:
-#            print y,
-#    print " "
+a = 0
+for x in moveGrid:
+    if a < 30:
+        r = 0
+        for y in x:
+            if r < 30:
+                if y == 0:
+                    print " ",
+                else:
+                    print y,
+                    
+            r = r + 1
+        print " " 
+    a = a + 1
 
 
 #for x in mapper.grid:

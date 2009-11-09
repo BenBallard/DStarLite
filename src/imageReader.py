@@ -2,7 +2,10 @@
 # and open the template in the editor.
 #from ImageFile import ImageFile
 #import BmpImagePlugin
+from ImageMath import imagemath_convert
 import Image
+import ImageOps
+import ImageMath
 import numpy
 
 
@@ -20,7 +23,7 @@ class ImageReader (object):
         self.y = y 
         
     def loadFile(self,fileName):
-        self.image = Image.open(fileName).convert("1")
+        self.image = Image.eval(ImageOps.grayscale(Image.open(fileName)), lambda a: 1 if a <128 else 0)
         x,y = self.image.size
         self.x = x
         self.y = y
@@ -35,47 +38,29 @@ class ImageReader (object):
         self.image.show()
        
     def printData(self):
-        data = list(self.image.getdata());
-        for x in xrange(self.y):
-            for y in xrange(self.x):
-                if data[x*self.x + y][0] == 1:
-                    print " ",
+    
+        
+        a = numpy.asarray(self.image)
+        for x in a:
+            for y in x:
+                
+                if y < 127:
+                   y = 0
                 else:
-                    print "#",
+                    y = 1
             print " "
             
     def convertToGrid(self):
-        grid =list()
-        print "ADDDD"
         a = numpy.asarray(self.image) # a is readonly
-        
-        print a
-        
-        
-        
-        
-        data = list(self.image.convert("1").getdata())
-        
-        
-        for x in xrange(self.y):
-            grid.append(list())
-            for y in xrange(self.x):
-                if a[x][y] == False:
-                    print a[x][y]
-#                
-#                if data[x*self.x + y] == 255:
-#                    grid[x].append(0)
-#                else:
-#                    grid[x].append(1)
-        return grid
-        print "ADF"
+        newArray = a.copy()    
+        return newArray
                     
-            
-            
     def makeBlank(self):
         im = Image.new(self.image.mode,self.image.size) 
         return im
     
     def copy(self):
         return self.image.copy()
+    
+
     
