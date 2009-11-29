@@ -26,7 +26,8 @@ def add(x,y,id):
 def getNextMove():
     path.sort(nodeCmp)
     node = path.pop()
-    return node.x,node.y
+    return node
+
 
 
 
@@ -37,6 +38,8 @@ def nodeCmp(nodeA,nodeB):
         return 0 
     else:
         return -1
+
+
 
 
 def pathIsBroken(grid):

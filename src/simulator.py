@@ -11,15 +11,16 @@ import mapper
 import ConfigParser
 import path
 import astar
+import dstar
 
 
 
 config = ConfigParser.SafeConfigParser()
 config.read("robot.ini")
 
-robot = Robot(3,3,400)
+robot = Robot(3,3,60)
 imageMap = ImageReader()
-imageMap.loadFile("/home/ben/TestImage3.bmp")
+imageMap.loadFile("/home/ben/TestImage1.bmp")
 
 mapper.initalize(imageMap,robot)
 
@@ -29,24 +30,61 @@ moveGrid = imageMap.convertToGrid().copy()
 
 
 
-Xgoal = 500
-Ygoal = 500
+Xgoal = 20
+Ygoal = 20
 goal = point(Xgoal,Ygoal)
 
 print "STARTIN LOOP"
 moveId=0
+
+
+
+
+#print "START"
+#blank = list()
+#for x in xrange(100000):
+#    blank.append(list())
+#    for y in xrange(100000):
+#        blank[x].append(dstar.State(x,y))
+#
+#print "DONE"
+
+
+
+
+
+
+
+
+
 while (robot.y != Ygoal or robot.x != Xgoal) :
     moveId = moveId+1
     print moveId
+    
     if path.pathIsBroken(mapper.grid) :
         path.restart()
-        astar.astar(mapper,robot,goal,path)
+        dstar.dstar(mapper, robot, goal, path)
     
-    pathNode = path.path.pop()
+    pathNode=path.getNextMove()
     robot.x = pathNode.x
     robot.y = pathNode.y
-    
     moveGrid[pathNode.x][pathNode.y]="9"
+    
+    a = 0
+    for x in moveGrid:
+        if a < 30:
+            r = 0
+            for y in x:
+                if r < 30:
+                    if y == 0:
+                        print " ",
+                    else:
+                        print y,
+                        
+                r = r + 1
+            print " " 
+        a = a + 1
+    
     
     mapper.updateMap(robot)
     
