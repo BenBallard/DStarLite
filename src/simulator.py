@@ -12,13 +12,14 @@ import ConfigParser
 import path
 import astar
 import dstar
+import dstar2
 
 
 
 config = ConfigParser.SafeConfigParser()
 config.read("robot.ini")
 
-robot = Robot(3,3,60)
+robot = Robot(3,3,1)
 imageMap = ImageReader()
 imageMap.loadFile("/home/ben/TestImage1.bmp")
 
@@ -63,7 +64,8 @@ while (robot.y != Ygoal or robot.x != Xgoal) :
     
     if path.pathIsBroken(mapper.grid) :
         path.restart()
-        dstar.dstar(mapper, robot, goal, path)
+        print "PATH BROKENT"
+        dstar2.dstar(mapper, robot, goal, path)
     
     pathNode=path.getNextMove()
     robot.x = pathNode.x
@@ -114,7 +116,7 @@ for x in moveGrid:
         print " " 
     a = a + 1
 
-
+print "ADFADSF"
 #for x in mapper.grid:
 #    for y in x:
 #        if y != 0 :

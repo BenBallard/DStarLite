@@ -14,6 +14,7 @@ class pathNode(object):
         self.id = 0
         
 def restart():
+    global path
     path = list()
     
 def add(x,y,id):
@@ -40,13 +41,26 @@ def nodeCmp(nodeA,nodeB):
         return -1
 
 
-
+def where():
+    global Spot
+    return Spot
 
 def pathIsBroken(grid):
+    global Spot 
+    Spot = pathNode()
     if len(path) == 0 :
+        Spot.x = -1
+        Spot.y = -1
         return True
+    print "PATH"
     for p in path:
+        
+        print p.x
+        print p.y
         if grid[p.x][p.y] == 1:
+            print p.x
+            print p.y
+            Spot = p
             return True
 #        for x in xrange(len(grid)):
 #            for y in xrange(len(grid[0])):
