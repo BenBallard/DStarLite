@@ -13,15 +13,16 @@ import path
 import astar
 import dstar
 import dstar2
+import DstarLite
 
 
 
 config = ConfigParser.SafeConfigParser()
 config.read("robot.ini")
 
-robot = Robot(3,3,1)
+robot = Robot(2,2,3)
 imageMap = ImageReader()
-imageMap.loadFile("/home/ben/TestImage1.bmp")
+imageMap.loadFile("/home/ben/TestImage4.bmp")
 
 mapper.initalize(imageMap,robot)
 
@@ -31,8 +32,8 @@ moveGrid = imageMap.convertToGrid().copy()
 
 
 
-Xgoal = 20
-Ygoal = 20
+Xgoal = 6
+Ygoal = 6
 goal = point(Xgoal,Ygoal)
 
 print "STARTIN LOOP"
@@ -53,7 +54,13 @@ moveId=0
 
 
 
-
+for m in mapper.grid:
+    for p in m:
+        if p ==0:
+            print " ",
+        else:
+            print "#",
+    print " "
 
 
 
@@ -65,7 +72,10 @@ while (robot.y != Ygoal or robot.x != Xgoal) :
     if path.pathIsBroken(mapper.grid) :
         path.restart()
         print "PATH BROKENT"
-        dstar2.dstar(mapper, robot, goal, path)
+#        dstar2.dstar(mapper, robot, goal, path)
+        DstarLite.dstar(mapper, robot, goal, path)
+#        astar.astar(mapper, robot, goal, path)
+        
     
     pathNode=path.getNextMove()
     robot.x = pathNode.x
@@ -90,13 +100,13 @@ while (robot.y != Ygoal or robot.x != Xgoal) :
     
     mapper.updateMap(robot)
     
-#    for m in mapper.grid:
-#        for p in m:
-#            if p ==0:
-#                print " ",
-#            else:
-#                print "#",
-#        print " "
+    for m in mapper.grid:
+        for p in m:
+            if p ==0:
+                print " ",
+            else:
+                print "#",
+        print " "
     
     
     
@@ -116,7 +126,6 @@ for x in moveGrid:
         print " " 
     a = a + 1
 
-print "ADFADSF"
 #for x in mapper.grid:
 #    for y in x:
 #        if y != 0 :

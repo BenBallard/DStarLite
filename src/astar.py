@@ -52,7 +52,10 @@ def expand(x,y,Cnode):
     
 
 #only expand and a dot and add it to the grid
+count = 0
 def expandSequence(Cnode):
+    global count
+    count = count +1
     x = Cnode.x
     y = Cnode.y
     expand(x-1,y,Cnode)
@@ -92,10 +95,13 @@ def astar(map,bot,Realgoal,path):
 #        print goal.y
 #        print Cnode.x
 #        print Cnode.y
+    zero = 0
     while Cnode.parent:
-        path.add(Cnode.x,Cnode.y,NodesOpened)
-        NodesOpened = NodesOpened - 1
+        path.add(Cnode.x,Cnode.y,zero)
+        zero = zero+1
         Cnode = Cnode.parent
+        
+    print "COUNT",count
     
         
     

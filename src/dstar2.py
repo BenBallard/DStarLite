@@ -128,11 +128,20 @@ def SIZE():
     return len(stateTList)
 #    return len(stateTDict)
     
+    
+count = 0
 def INSERT(v):
     global stateTDict
     global stateTList
 #    stateTDict[HASH(v)] = v
+    for x in stateTList:
+        if x.x == v.x and x.y == v.y:
+            return 
+        if getT(x)==CLOSED:
+            return
     stateTList.append(v)
+    global count 
+    count = count + 1
     
 def REMOVE(v):    
     global stateTDict
@@ -140,6 +149,7 @@ def REMOVE(v):
     for x in stateTList:
         if x.x == v.x and x.y == v.y:
             stateTList.remove(x)
+            break
     
 def GETKMIN():
     stateTList.sort(stateCmp)
@@ -149,8 +159,10 @@ def GETKMIN():
     return getK(v)
 #    else:
 #        return GETKMIN()
-
+remove = 0
 def REMOVEMIN():
+    global remove 
+    remove = remove + 1
     stateTList.sort(stateCmp)
     v = stateTList.pop()
     return v
@@ -288,7 +300,7 @@ def dstar(mapP,bot,Realgoal,path):
         setup = True
     
     
-    print "Boot Finished"
+#    print "Boot Finished"
     
     
     for x in xrange(len(map)):
@@ -297,28 +309,30 @@ def dstar(mapP,bot,Realgoal,path):
                 v = State(x,y)
                 ws = v.GetNeighborList()
                 for w in ws:
-                    modifyCost(v, w, 100)
-    print "ADDED"
+                    if getC(v,w) != 100:    
+                        modifyCost(v, w, 100)
+#    print "ADDED"
     
     
     botState = State(bot.x,bot.y)
     if getG(botState) == 0:
-        setG(botState,1)
-    
+        if botState.x != goal.x or botState.y!=goal.y:
+            setG(botState,1)
+    print"ADSF", SIZE()
     getNext(botState)
     
     
     #setup 
     
     
-    for x in xrange(len(grid)):
-        for y in xrange(len(grid[0])):
-            if stateGrid[x][y][state_Wall] == 1:
-                print "10",
-            else:
-                print stateGrid[x][y][state_G],
-            
-        print " "
+#    for x in xrange(len(grid)):
+#        for y in xrange(len(grid[0])):
+#            if stateGrid[x][y][state_Wall] == 1:
+#                print "10",
+#            else:
+#                print stateGrid[x][y][state_G],
+#            
+#        print " "
 
 
 
@@ -329,10 +343,14 @@ def dstar(mapP,bot,Realgoal,path):
     print bot.y
 
     while botState.x != Realgoal.x or botState.y != Realgoal.y:
-        path.add(botState.x,botState.y,getG(botState))
-        print "BOT"
-        print botState.x, " " , Realgoal.x
-        print botState.y, " " , Realgoal.y
+        path.add(botState.x,botState.y,getG(botState)+1)
+#        print "BOT"
+#        print botState.x, " " , Realgoal.x
+#        print botState.y, " " , Realgoal.y
         botState = getB(botState)
+    path.add(Realgoal.x,Realgoal.y,0)
+    
+    print "COUNT", count
+    print "Remove",remove
     
     

@@ -24,12 +24,19 @@ def add(x,y,id):
     node.id = id
     path.append(node)
 
+def contain(x,y):
+    for s in path:
+        if s.x == x and s.y == y:
+            return True
+    False
+    
+    
+    
+
 def getNextMove():
     path.sort(nodeCmp)
     node = path.pop()
     return node
-
-
 
 
 def nodeCmp(nodeA,nodeB):
@@ -52,14 +59,14 @@ def pathIsBroken(grid):
         Spot.x = -1
         Spot.y = -1
         return True
-    print "PATH"
+#    print "PATH"
     for p in path:
         
-        print p.x
-        print p.y
+#        print p.x
+#        print p.y
         if grid[p.x][p.y] == 1:
-            print p.x
-            print p.y
+#            print p.x
+#            print p.y
             Spot = p
             return True
 #        for x in xrange(len(grid)):
