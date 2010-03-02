@@ -257,6 +257,7 @@ def initialise(GoalState):
 def getNext(v):
     while SIZE() > 0 and GETKMIN() < getG(v):
         processVertex()
+       
     
     if getT(v) == CLOSED:
         return getB(v)
@@ -273,7 +274,7 @@ def dstar(mapP,bot,Realgoal,path):
     global goal
     global stateT
     global robot
-    
+    global Pmap
     global map
     global setup
     global stateTDict
@@ -284,6 +285,7 @@ def dstar(mapP,bot,Realgoal,path):
     stateTDict = dict()
     
     
+    mapcheck=0
     if setup == False:
         map = mapP.grid
         goal = Realgoal
@@ -298,9 +300,11 @@ def dstar(mapP,bot,Realgoal,path):
     
         initialise(State(Realgoal.x,Realgoal.y))
         setup = True
+        print "Running"
+    else:
+        mapcheck = map - Pmap
     
-    
-#    print "Boot Finished"
+    print "Boot Finished"
     
     
     for x in xrange(len(map)):
@@ -309,9 +313,11 @@ def dstar(mapP,bot,Realgoal,path):
                 v = State(x,y)
                 ws = v.GetNeighborList()
                 for w in ws:
+                    print "ASDF"
                     if getC(v,w) != 100:    
                         modifyCost(v, w, 100)
-#    print "ADDED"
+    Pmap = map.copy()
+    print "ADDED"
     
     
     botState = State(bot.x,bot.y)
@@ -344,9 +350,9 @@ def dstar(mapP,bot,Realgoal,path):
 
     while botState.x != Realgoal.x or botState.y != Realgoal.y:
         path.add(botState.x,botState.y,getG(botState)+1)
-#        print "BOT"
-#        print botState.x, " " , Realgoal.x
-#        print botState.y, " " , Realgoal.y
+        print "BOT"
+        print botState.x, " " , Realgoal.x
+        print botState.y, " " , Realgoal.y
         botState = getB(botState)
     path.add(Realgoal.x,Realgoal.y,0)
     

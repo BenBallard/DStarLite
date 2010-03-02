@@ -7,6 +7,7 @@ Created on Dec 2, 2009
 import math
 import numpy as np
 import path 
+import mapper
 global stateTList
 
 
@@ -30,9 +31,7 @@ class State(object):
         self.x = x
         self.y = y
         self.Exist = self.exists()
-#        if self.Exist == False:
-#            print "DO NOT EXIST"
-    
+        
     def exists(self):
         global stateGrid
         global map
@@ -69,7 +68,8 @@ class State(object):
             states.append(downR)
         if downL.Exist:
             states.append(downL)
-            
+        #These  States should be sorted
+        
         return states
     
     def CheapNeighbor(self):
@@ -257,6 +257,14 @@ def initialise(Goal):
 
     
 def dstar(mapP,bot,Realgoal,path):
+    
+    for m in mapper.grid:
+        for p in m:
+            if p ==0:
+                print " ",
+            else:
+                print "#",
+        print " "
     global grid
     global goal
     global stateT

@@ -6,8 +6,6 @@ Created on Nov 1, 2009
 import ConfigParser
 
 
-
-
 class Robot (object):
     def __init__(self, x, y,radi):
         self.x = x

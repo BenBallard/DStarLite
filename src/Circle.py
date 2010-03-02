@@ -6,7 +6,6 @@ Created on Nov 2, 2009
 
 
 import math
-from robotSim import Robot 
 from numpy import *
 
 class CircleMap(object):
@@ -33,6 +32,3 @@ class CircleMap(object):
                 if y == 1:
                     print "#",
             print " "
-            
-#print find.xOffset
-#print find.yOffset

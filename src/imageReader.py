@@ -8,12 +8,6 @@ import ImageOps
 import ImageMath
 import numpy
 
-
-#import sys
-
-#A Map
-
-
 class ImageReader (object):
     def __init__(self):   
         self.image = Image.new("RGB", (0,0))
@@ -38,14 +32,12 @@ class ImageReader (object):
         self.image.show()
        
     def printData(self):
-    
-        
         a = numpy.asarray(self.image)
         for x in a:
             for y in x:
                 
                 if y < 127:
-                   y = 0
+                    y = 0
                 else:
                     y = 1
             print " "

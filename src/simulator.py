@@ -16,126 +16,45 @@ import dstar2
 import DstarLite
 
 
-
+'''
 config = ConfigParser.SafeConfigParser()
 config.read("robot.ini")
-
+'''
 robot = Robot(2,2,3)
 imageMap = ImageReader()
-imageMap.loadFile("/home/ben/TestImage4.bmp")
-
+imageMap.loadFile("/home/ben/TestImage1.bmp")
 mapper.initalize(imageMap,robot)
-
-mapper.updateMap(robot)
-fill = 0
 moveGrid = imageMap.convertToGrid().copy()
 
+goal = point(20,20)
 
-
-Xgoal = 6
-Ygoal = 6
-goal = point(Xgoal,Ygoal)
+mapper.printMoveGrid()
 
 print "STARTIN LOOP"
 moveId=0
 
-
-
-
-#print "START"
-#blank = list()
-#for x in xrange(100000):
-#    blank.append(list())
-#    for y in xrange(100000):
-#        blank[x].append(dstar.State(x,y))
-#
-#print "DONE"
-
-
-
-
-for m in mapper.grid:
-    for p in m:
-        if p ==0:
-            print " ",
-        else:
-            print "#",
-    print " "
-
-
-
-
-while (robot.y != Ygoal or robot.x != Xgoal) :
+while (robot.y != goal.y or robot.x != goal.x) :
     moveId = moveId+1
     print moveId
     
     if path.pathIsBroken(mapper.grid) :
         path.restart()
-        print "PATH BROKENT"
-#        dstar2.dstar(mapper, robot, goal, path)
+        print "The path is broken"
+        
+      #  dstar2.dstar(mapper, robot, goal, path)
+        
         DstarLite.dstar(mapper, robot, goal, path)
-#        astar.astar(mapper, robot, goal, path)
+      #  astar.astar(mapper, robot, goal, path)
         
     
     pathNode=path.getNextMove()
     robot.x = pathNode.x
     robot.y = pathNode.y
-    moveGrid[pathNode.x][pathNode.y]="9"
+    mapper.moveGrid[pathNode.x][pathNode.y]="1"
     
-    a = 0
-    for x in moveGrid:
-        if a < 30:
-            r = 0
-            for y in x:
-                if r < 30:
-                    if y == 0:
-                        print " ",
-                    else:
-                        print y,
-                        
-                r = r + 1
-            print " " 
-        a = a + 1
-    
+    mapper.printMoveGrid()
     
     mapper.updateMap(robot)
     
-    for m in mapper.grid:
-        for p in m:
-            if p ==0:
-                print " ",
-            else:
-                print "#",
-        print " "
-    
-    
-    
-#
-a = 0
-for x in moveGrid:
-    if a < 30:
-        r = 0
-        for y in x:
-            if r < 30:
-                if y == 0:
-                    print " ",
-                else:
-                    print y,
-                    
-            r = r + 1
-        print " " 
-    a = a + 1
-
-#for x in mapper.grid:
-#    for y in x:
-#        if y != 0 :
-#            print "#",
-#        else:
-#            print " ", 
-#    print " " 
-
-#print Map.image.mode
-
-
 
 
