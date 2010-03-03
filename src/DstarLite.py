@@ -257,14 +257,6 @@ def initialise(Goal):
 
     
 def dstar(mapP,bot,Realgoal,path):
-    
-    for m in mapper.grid:
-        for p in m:
-            if p ==0:
-                print " ",
-            else:
-                print "#",
-        print " "
     global grid
     global goal
     global stateT

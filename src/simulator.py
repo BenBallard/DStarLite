@@ -13,6 +13,7 @@ import path
 import astar
 import dstar
 import dstar2
+import Dlite
 import DstarLite
 
 
@@ -42,8 +43,8 @@ while (robot.y != goal.y or robot.x != goal.x) :
         print "The path is broken"
         
       #  dstar2.dstar(mapper, robot, goal, path)
-        
-        DstarLite.dstar(mapper, robot, goal, path)
+        Dlite.dstar(robot,goal,path)
+      #  DstarLite.dstar(mapper, robot, goal, path)
       #  astar.astar(mapper, robot, goal, path)
         
     
