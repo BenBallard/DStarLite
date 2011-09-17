@@ -12,9 +12,9 @@ import ConfigParser
 import path
 import astar
 #import dstar
-import dstar2
-import dstar3
-#import Dlite
+#import dstar2
+#import dstar3
+import dlite
 #import DstarLite
 
 
@@ -22,13 +22,15 @@ import dstar3
 config = ConfigParser.SafeConfigParser()
 config.read("robot.ini")
 '''
-robot = Robot(17,4,3)
+#robot = Robot(17,4,44)
+robot = Robot(3,17,5)
 imageMap = ImageReader()
 imageMap.loadFile("../map.bmp")
 mapper.initalize(imageMap,robot)
 moveGrid = imageMap.convertToGrid().copy()
 
-goal = point(3,17)
+#goal = point(3,17)
+goal = point(17,4)
 
 mapper.printMoveGrid()
 
@@ -36,7 +38,9 @@ print "STARTIN LOOP"
 moveId=0
 Xlength = mapper.grid.shape[0]
 Ylength = mapper.grid.shape[1]
-dstar = dstar3.DStar(Xlength,Ylength,goal)
+#dstar = dstar3.DStar(Xlength,Ylength,goal)
+dstar = dlite.Dlite(Xlength,Ylength,goal,robot)
+
 
 while (robot.y != goal.y or robot.x != goal.x) :
     moveId = moveId+1
@@ -44,10 +48,12 @@ while (robot.y != goal.y or robot.x != goal.x) :
     if path.pathIsBroken(mapper.grid) :
         path.restart()
         print "The path is broken"
-      #  dstar2.dstar(mapper, robot, goal, path)
+        #  dstar2.dstar(mapper, robot, goal, path)
+
         dstar.dstar(mapper, robot, goal, path)
-      #  Dlite.dstar(robot,goal,path)
-      #  DstarLite.dstar(mapper, robot, goal, path)
+     
+    #dlite.dstar(robot,goal,path)
+     #  #  DstarLite.dstar(mapper, robot, goal, path)
       #  astar.astar(mapper, robot, goal, path)
     pathNode=path.getNextMove()
     robot.x = pathNode.x
